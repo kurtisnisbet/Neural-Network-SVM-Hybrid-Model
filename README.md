@@ -1,4 +1,4 @@
-# Depth of Anaesthesia Index Development Using a Neural Network/SVM hybrid model
+# Neural Network/SVM hybrid model - Depth of Anaesthesia Index
 
 This repository demonstrates the development of a Depth of Anaesthesia (DoA) index using supervised machine learning techniques. The project utilises EEG data to improve the benchmark BIS index.
 
