@@ -1,4 +1,4 @@
-# Depth of Anaesthesia Index Development Using Machine Learning
+# Depth of Anaesthesia Index Development Using a Neural Network/SVM hybrid model
 
 This repository demonstrates the development of a Depth of Anaesthesia (DoA) index using supervised machine learning techniques. The project utilises EEG data to improve the benchmark BIS index.
 
@@ -188,7 +188,3 @@ The partial dependence plot shows the relationship of each predictive variable w
 1. RFECV-SVM reduced the features to the most predictive, therefore decreasing computation times and inefficiencies in the subsequent models, as real-time DoA index is vital during surgical procedures.
 2. The Neural Network model had better performance than the BIS index, and captured non-linear relationships of the selected features.
 3. Stacked Regressor used the meta-features from the Neural Network to create the best model of DoA.
-
-## Disclaimer
-
-This work was completed for the final assignment for the course CSC6003 Machine Learning at the University of Southern Queensland. As such, the  details in this readme file been altered and simplified to ensure this information file no longer fulfills the marking criteria. Further, the full code has been widtheld, however if it can be send by request if I am contacted over GitHub.
