@@ -81,7 +81,7 @@ Before modelling, the data was examined to understand target and feature distrib
 ***Figure 2:*** BIS distribution across training (blue) and test (coral) sets. The training distribution is bimodal, with peaks around 25–30 and 40–45, reflecting patients at different anaesthesia depths. The test set follows a similar shape, confirming the split is representative.
 
 <div align="center">
-  <img src="./assets/img/feature-distributions.png" alt="feature distributions" style="width:80%;"/>
+  <img src="./assets/img/feature-distributions.png" alt="feature distributions" style="width:100%;"/>
 </div>
 
 ***Figure 3:*** Individual feature distributions. Features x2 and x3 are tightly clustered with very low variance, suggesting limited predictive power. Feature x4 shows a strong right skew. These patterns informed the subsequent feature selection step.
