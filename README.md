@@ -1,6 +1,6 @@
 # Neural Network/SVM Hybrid Model - Depth of Anaesthesia Index
 
-This repository develops a Depth of Anaesthesia (DoA) index using supervised machine learning. The project trains regression models on EEG-derived features to predict the Bispectral Index (BIS), comparing an SVR baseline, a tuned neural network, and a stacked ensemble of the two, all evaluated on held-out test recordings.
+This repository develops a Depth of Anaesthesia (DoA) index using supervised machine learning, completed as a university assignment for the Master of Data Science (USQ). The project trains regression models on EEG-derived features to predict the Bispectral Index (BIS), comparing an SVR baseline, a tuned neural network, and a stacked ensemble of the two, all evaluated on held-out test recordings.
 
 ### Achievements:
 - Built a tuned neural network achieving R²: 0.844, MSE: 64.33, MAE: 6.40 on the held-out test set — a substantial gain over the SVR baseline (R²: 0.777, MSE: 91.70).
@@ -21,9 +21,10 @@ This repository develops a Depth of Anaesthesia (DoA) index using supervised mac
 6. [Neural Network Model](#neural-network-model)
 7. [Stacked Regressor](#stacked-regressor)
 8. [Comparative Analysis](#comparative-analysis)
-9. [Tools and Libraries](#tools-and-libraries)
-10. [Key Findings](#key-findings)
-11. [Limitations](#limitations)
+9. [How to Run](#how-to-run)
+10. [Tools and Libraries](#tools-and-libraries)
+11. [Key Findings](#key-findings)
+12. [Limitations](#limitations)
 
 
 ## Project Structure
@@ -95,7 +96,7 @@ Before modelling, the data was examined to understand target and feature distrib
   <img src="./assets/img/correlation-heatmap.png" alt="correlation heatmap" style="width:55%;"/>
 </div>
 
-***Figure 4:*** Feature correlation matrix. The strongest correlations with BIS are x4 (+0.72), x5 (+0.58), x7 (−0.49), x1 (+0.48) and x6 (+0.47); x2 (−0.24) and x3 (≈0.00) are weak. Note that two of the three features RFECV ultimately selected (x4, x1, x7) are *not* simply the three most correlated with BIS — x5 and x6 correlate with BIS just as strongly but are dropped because they are collinear with the chosen features (x6 correlates 0.89 with x1, and x5 correlates ~0.4–0.5 with both x1 and x4). RFECV therefore keeps a near-non-redundant subset rather than the top-correlated features individually. x3 is uncorrelated with everything and is removed first.
+***Figure 4:*** Feature correlation matrix. The strongest correlations with BIS are x4 (+0.72), x5 (+0.58), x7 (−0.49), x1 (+0.48) and x6 (+0.47); x2 (−0.24) and x3 (≈0.00) are weak. Note that two of the three features RFECV ultimately selected (x4, x1, x7) are not simply the three most correlated with BIS — x5 and x6 correlate with BIS just as strongly but are dropped because they are collinear with the chosen features (x6 correlates 0.89 with x1, and x5 correlates ~0.4–0.5 with both x1 and x4). RFECV therefore keeps a near-non-redundant subset rather than the top-correlated features individually. x3 is uncorrelated with everything and is removed first.
 
 ## Feature Selection
 
@@ -121,7 +122,7 @@ selected_features = X_train.columns[rfecv.support_].tolist()
 
 ## SVR Baseline
 
-A tuned linear Support Vector Regressor provides the reference point against which the neural network and ensemble are judged. A GridSearchCV (5-fold) searched over the regularisation strength `C` and the no-penalty tube width `epsilon`, selecting `C=100`, `epsilon=1.0` (best CV R² 0.610).
+A tuned linear Support Vector Regressor provides the reference point against which the neural network and ensemble are judged. A GridSearchCV (5-fold) searched over the regularisation strength `C` and the no-penalty tube width `epsilon`, selecting **`C=100`, `epsilon=1.0`** (best CV R² 0.610).
 
 **Key Code:**
 ```python
@@ -227,8 +228,10 @@ Performance of the SVR baseline, Neural Network, and Stacked Regressor — all t
 | Model             | MSE    | MAE   | R²    | Pearson |
 |-------------------|--------|-------|-------|---------|
 | SVR Baseline      | 91.696 | 7.697 | 0.777 | 0.885   |
-| Neural Network    | 64.334 | 6.401 | 0.844 | 0.921   |
-| Stacked Regressor | **63.874** | **6.448** | **0.845** | **0.924** |
+| Neural Network    | 64.334 | **6.401** | 0.844 | 0.921   |
+| Stacked Regressor | **63.874** | 6.448 | **0.845** | **0.924** |
+
+(Best value per column in bold — note the standalone NN actually has the lowest MAE.)
 
 **Partial Dependence Plot:**
 
@@ -239,6 +242,15 @@ The partial dependence plot shows the marginal relationship of each selected fea
 </div>
 
 ***Figure 10:*** In the stacked regressor model, the three selected variables have a combination of positive (x1, x4) and negative (x7) effects on the predicted DoA, with x4 contributing a strongly non-linear response.
+
+## How to Run
+
+```bash
+pip install pandas numpy scikit-learn matplotlib seaborn openpyxl jupyter
+jupyter notebook eeg-doa-stacked-ensemble.ipynb
+```
+
+The notebook is self-contained: it reads `assets/dataset/project_data.xlsx` and runs top-to-bottom. Note the grid searches take some time on CPU (~34k training rows × 5-fold CV).
 
 ## Tools and Libraries
 
